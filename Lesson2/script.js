@@ -10,8 +10,24 @@ let appData = {
     savings: false
 };
 
-for (let i = 0; i < 2; i++) {
-    do {
+//let i = 0;
+//while (i < 2) {
+//    let must = prompt("Введите обязательную статью расходов в этом месяце", ""),
+//        howMuch = parseInt((prompt("Во сколько обойдется?", "")));
+//    i++;
+//}
+
+//let i = 0;
+//do {
+//    let must = prompt("Введите обязательную статью расходов в этом месяце", ""),
+//        howMuch = parseInt((prompt("Во сколько обойдется?", "")));
+//    i++;
+//}
+//while (i < 2);
+
+let y = 0;
+do {
+    for (let i = 0; i < 2; i++) {
         let must = prompt("Введите обязательную статью расходов в этом месяце", ""),
             howMuch = parseInt((prompt("Во сколько обойдется?", "")));
 
@@ -25,9 +41,14 @@ for (let i = 0; i < 2; i++) {
             alert("Введены некорректные данные");
             continue;
         }
-    }
-    while (i >= 2);
-};
+        console.log(must);
+        console.log(howMuch);
+        /* не могу понять, почему три раза по циклу идет */
+    };
+    y++;
+
+}
+while (y < 2);
 
 appData.moneyPerDay = appData.budget / 30;
 alert("Ежедневный бюджет: " + appData.moneyPerDay.toFixed(2));
