@@ -6,18 +6,18 @@ arr = ['3466789', '7890650', '6766', '90865', '764', '32156', '189'];
 //(Должны присутствовать в массиве)   ?-в смысле?
 
 /* to iterate througth elements of an array: */
-for (let i = 0; i < arr.length; i++) {
-    if (arr[i][0] == '3' && arr[i][0] == '7') {
-        console.log(arr[i]);
-    }
-};
+//for (let i = 0; i < arr.length; i++) {
+//    if (arr[i][0] == '3' && arr[i][0] == '7') {
+//        console.log(arr[i]);
+//    }
+//};
 
 /* не уверена, или arr[i][0] будет отображать первый элемент строки,
 поэтому переписала так: */
 
 for (let i = 0; i < arr.length; i++) {
     let str = arr[i];
-    if (str[0] == '3' && str[0] == '7') {
+    if (str[0] == '3' || str[0] == '7') {
         console.log(str);
     }
 };
