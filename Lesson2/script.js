@@ -25,30 +25,34 @@ let appData = {
 //}
 //while (i < 2);
 
-let y = 0;
-do {
-    for (let i = 0; i < 2; i++) {
-        let must = prompt("Введите обязательную статью расходов в этом месяце", ""),
-            howMuch = parseInt((prompt("Во сколько обойдется?", "")));
 
-        /* если пользователь нажимает отмена - тип данных null,
-        если ничего не внес - пустая строка ''; a.length - длина;
-        делаем проверки: */
-        if ((typeof (must)) === 'string' && (typeof (must)) != null && (typeof (howMuch)) != null &&
-            must != '' && howMuch != '' && must.length < 50) {
-            appData.expenses[must] = howMuch;
-        } else {
-            alert("Введены некорректные данные");
-            continue;
-        }
-        console.log(must);
-        console.log(howMuch);
-        /* не могу понять, почему три раза по циклу идет */
-    };
-    y++;
+for (let i = 0; i < 2; i++) {
+    let must = prompt("Введите обязательную статью расходов в этом месяце", ""),
+        howMuch = parseInt((prompt("Во сколько обойдется?", "")));
 
+    /* если пользователь нажимает отмена - тип данных null,
+    !!! В JS null - это элемент, которого не существует, как например, когда в промпте жмешь отмену, 
+    он просто не создается и ПЕРЕМЕННАЯ равна null, поэтому и сравнивать его надо a != null, без typeof)
+    если ничего не внес - пустая строка ''; a.length - длина;
+
+    + по ходу, у меня надо еще делать проверку на howMuch != NaN
+    и jshint ругается, что надо упользовать isNaN function,
+    но я пока не знаю как ;(
+    
+    делаем проверки: */
+
+
+    if ((typeof (must)) === 'string' && must != null && howMuch != null &&
+        must != '' && howMuch != '' && howMuch != NaN && must.length < 50) {
+        appData.expenses[must] = howMuch;
+    } else {
+        alert("Введены некорректные данные");
+        i--;
+    }
+
+    console.log(must);
+    console.log(howMuch);
 }
-while (y < 2);
 
 appData.moneyPerDay = appData.budget / 30;
 alert("Ежедневный бюджет: " + appData.moneyPerDay.toFixed(2));
