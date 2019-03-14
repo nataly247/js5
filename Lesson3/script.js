@@ -17,7 +17,7 @@ let appData = {
     expenses: {},
     optionalExpenses: 0,
     income: [],
-    savings: false
+    savings: true
 };
 
 function chooseExpenses() {
@@ -77,5 +77,16 @@ function chooseOptExpenses() {
         }
 
         console.log(optional);
+    }
+}
+chooseOptExpenses();
+
+function checkSavings() {
+    if (appData.savings == true) {
+        let save = parseInt(prompt("Какова сумма накоплений,")),
+            percent = parseInt(prompt("Под какой процент?"));
+
+        appData.monthIncome = save / 100 / 12 * percent;
+        alert("Доход в месяц с вашего депзита: " + appData.monthIncome);
     }
 }
