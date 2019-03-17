@@ -28,6 +28,8 @@ title.innerHTML = 'Мы продаем только подлинную техн�
 document.body.style.backgroundImage = "url(img/apple_true.jpg)";
 
 //удалить рекламу со страницы
+let advert = document.querySelector('.adv');
+advert.style.display = 'none';
 //column.removeChild('div.adv');  Reference Error (?)
 
 //добавить комментарий
