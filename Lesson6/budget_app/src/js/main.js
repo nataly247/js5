@@ -56,9 +56,22 @@ expensesBtn.addEventListener('click', function () {
             i--;
         }
     }
-
-
+    expensesValue.textContent = sum;
 });
+
+optionalExpensesBtn.addEventListener('click', function () {
+    for (let i = 0; i < optionalExpensesItem.length; i++) {
+        let optional = optionalExpensesItem[i].value;
+
+        if ((typeof (optional)) === 'string' && optional != null &&
+            optional != '') {
+            appData.optionalExpenses[i + 1] = optional;
+        }
+        optionalExpensesValue.textContent += appData.optionalExpenses[i] + ' ';
+    }
+});
+
+
 
 let appData = {
     budget: money,
