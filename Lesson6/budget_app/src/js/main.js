@@ -88,7 +88,7 @@ countBudgetBtn.addEventListener('click', function () {
     }
 });
 
-incomeItem.addEventListener('input', function () {
+incomeItem.addEventListener('input', function () { //пока не вижу, в чем ошибка(
     let items = incomeItem.value;
     appData.income = items.split(', ');
     incomeValue.textContent = appData.income;
