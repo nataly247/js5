@@ -62,12 +62,24 @@ expensesBtn.addEventListener('click', function () {
 optionalExpensesBtn.addEventListener('click', function () {
     for (let i = 0; i < optionalExpensesItem.length; i++) {
         let optional = optionalExpensesItem[i].value;
+        appData.optionalExpenses[i] = optional;
 
-        if ((typeof (optional)) === 'string' && optional != null &&
-            optional != '') {
-            appData.optionalExpenses[i + 1] = optional;
-        }
         optionalExpensesValue.textContent += appData.optionalExpenses[i] + ' ';
+    }
+});
+
+countBudgetBtn.addEventListener('click', function () {
+    appData.moneyPerDay = ((appData.budget - sum) / 30).toFixed();
+    dayBudgetValue.textContent = appData.moneyPerDay;
+
+    if (appData.moneyPerDay <= 100) {
+        levelValue.textContent = "Минимальный уровень достатка";
+    } else if (appData.moneyPerDay > 100 && appData.moneyPerDay < 2000) {
+        levelValue.textContent = "Средний уровень достатка";
+    } else if (appData.moneyPerDay >= 2000) {
+        levelValue.textContent = "Высокий уровень достатка";
+    } else {
+        levelValue.textContent = "Произошла ошибка";
     }
 });
 
@@ -84,7 +96,7 @@ let appData = {
 
     },
     detectDayBudget: function () {
-        appData.moneyPerDay = appData.budget / 30;
+        ;
         alert("Ежедневный бюджет: " + appData.moneyPerDay.toFixed(2));
     },
     detectLevel: function () {
