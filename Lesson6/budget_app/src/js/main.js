@@ -32,7 +32,7 @@ startBtn.addEventListener('click', function () {
 
     while (isNaN(money) || money == "" || money == null) {
         money = parseInt(prompt("Ваш бюджет на месяц?", ""));
-    }
+    };
     appData.budget = money;
     appData.timeData = time;
     budgetValue.textContent = money.toFixed();
