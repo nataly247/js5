@@ -11,9 +11,9 @@ let startBtn = document.getElementById('start'),
 
     expensesItem = document.getElementsByClassName('expenses-item'),
 
-    expensesItemBtn = document.getElementsByTagName('expenses-item-btn'), //Утвердить
-    optionalExpensesBtn = document.getElementsByTagName('optionalexpenses-btn'), //Утвердить
-    countBudgetBtn = document.getElementsByTagName('count-budget-btn'), //Рассчитать
+    expensesBtn = document.getElementsByTagName('button')[0], //Утвердить
+    optionalExpensesBtn = document.getElementsByTagName('button')[1], //Утвердить
+    countBudgetBtn = document.getElementsByTagName('button')[2], //Рассчитать
 
     optionalExpensesItem = document.querySelectorAll('optionalexpenses-item'),
     incomeItem = document.querySelector('choose-income'),
@@ -41,6 +41,25 @@ startBtn.addEventListener('click', function () {
     dayValue.value = new Date(Date.parse(time)).getDate();
 });
 
+expensesBtn.addEventListener('click', function () {
+    let sum = 0;
+    for (let i = 0; i < expensesItem.length; i++) {
+        let must = expensesItem[i].value,
+            howMuch = expensesItem[++i].value;
+
+        if ((typeof (must)) === 'string' && must != null && howMuch != null &&
+            must != '' && howMuch != '' && isNaN(howMuch) == false && must.length < 50) {
+            appData.expenses[must] = howMuch;
+            sum += +howMuch;
+        } else {
+            alert("Введены некорректные данные");
+            i--;
+        }
+    }
+
+
+});
+
 let appData = {
     budget: money,
     timeData: time,
@@ -49,18 +68,7 @@ let appData = {
     income: [],
     savings: true,
     chooseExpenses: function () {
-        for (let i = 0; i < 2; i++) {
-            let must = prompt("Введите обязательную статью расходов в этом месяце", ""),
-                howMuch = parseInt((prompt("Во сколько обойдется?", "")));
 
-            if ((typeof (must)) === 'string' && must != null && howMuch != null &&
-                must != '' && howMuch != '' && isNaN(howMuch) == false && must.length < 50) {
-                appData.expenses[must] = howMuch;
-            } else {
-                alert("Введены некорректные данные");
-                i--;
-            }
-        }
     },
     detectDayBudget: function () {
         appData.moneyPerDay = appData.budget / 30;
