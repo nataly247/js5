@@ -1,0 +1,27 @@
+body {
+  font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+  margin: 2em;
+  text-align: center;
+}
+
+h1 {
+  color:#25436e; /* #373fff; */
+}
+
+.controls {
+  text-align: center;
+}
+
+button {
+  display: inline-block;
+  border-radius: 3px;
+  border: none;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  background: #3771a1;
+  border-bottom: 1px solid #25436e;
+  color: white;
+  font-weight: bold;
+  margin: 0 0.25rem;
+  text-align: center;
+}
