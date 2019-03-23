@@ -1,27 +1,38 @@
+//works after DOM stucture donloaded
+
 window.addEventListener('DOMContentLoaded', () => {
 
     'use strict';
+
+    // tab parent - class "info-header"
+    // tab class "info-header-tab"
+    // every tab content class "info-tabcontent"
+
     let tab = document.querySelectorAll('.info-header-tab'),
         info = document.querySelector('.info-header'),
-        tabContent = document.querySelectorAll('info-tabcontent');
+        tabContent = document.querySelectorAll('.info-tabcontent');
 
+    //to hide other tabs content after user click on one of them
     function hideTabContent(a) {
         for (let i = a; i < tabContent.length; i++) {
             tabContent[i].classList.remove('show');
             tabContent[i].classList.add('hide');
         }
     }
+
     hideTabContent(1);
 
     function showTabContent(b) {
         if (tabContent[b].classList.contains('hide')) {
             tabContent[b].classList.remove('hide');
             tabContent[b].classList.add('show');
+            console.log(tabContent);
         }
     }
 
     info.addEventListener('click', (event) => {
         let target = event.target;
+        console.log(target);
         if (target && target.classList.contains('info-header-tab')) {
             for (let i = 0; i < tab.length; i++) {
                 if (target == tab[i]) {
@@ -32,6 +43,7 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
 
     // Timer
 
