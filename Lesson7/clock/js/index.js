@@ -1,12 +1,13 @@
 let date = new Date();
 
 function addZero(ourTime) {
-    if (ourTime < 2) {
+    if (ourTime < 10) {
         return '0' + ourTime;
     } else {
         return ourTime;
     }
 }
+
 
 function showTime() {
     document.getElementById('writeTime').textContent = date.getHours() + ':' +
