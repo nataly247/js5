@@ -202,7 +202,14 @@ window.addEventListener('DOMContentLoaded', () => {
             if (request.readyState < 4) {
                 contactStatusMessage.innerHTML = message2.loading;
             } else if (request.readyState === 4 && request.status == 200) {
-                contactStatusMessage.innerHTML = message2.success;  //validPhone() - ?
+                contactStatusMessage.innerHTML = message2.success;
+
+                /* let phoneVal = document.getElementsById('needvalid');
+                   needvalid.addEventListener('click', validPhone());
+                
+                  // - ?
+                */
+
             } else {
                 contactStatusMessage.innerHTML = message2.failure;
             }
@@ -211,29 +218,28 @@ window.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < contactFormInput.length; i++) {
             contactFormInput[i].value = ' ';
         }
-    });
-
-    //Валидация данных 
-
-    function validPhone() {
-
-        let re = /^\+|\d[\d\(\)\ -]{4,14}\d$/;
-
-        let userPhone = document.getElementById('tel').value;
-        let valid = re.test(userPhone);
 
 
-        if (valid) {
-            contactStatusMessage.innerHTML = message2.success;
-        } else {
-            let output = "Номер телефона введен неправильно!";
-            document.getElementsByClassName('.contact-form-title').innerTHML =
-                document.getElementsByClassName('contact-form-title').innerHTML + '<br>' + output;
+        //Валидация данных 
+
+        function validPhone() {
+
+            let re = /^\+|\d[\d\(\)\ -]{4,14}\d$/;
+
+            let userPhone = document.getElementById('tel').value;
+            let valid = re.test(userPhone);
+
+
+            if (valid) {
+                contactStatusMessage.innerHTML = message2.success;
+            } else {
+                let output = "Номер телефона введен неправильно!";
+                document.getElementsByClassName('.contact-form-title').innerTHML =
+                    document.getElementsByClassName('contact-form-title').innerHTML + '<br>' + output;
+            }
         }
 
-
-    }
-
+    });
 
 
 });
