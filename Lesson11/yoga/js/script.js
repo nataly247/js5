@@ -57,6 +57,24 @@ window.addEventListener('DOMContentLoaded', () => {
         //  hours = Math.floor((t / 1000 / 60 / 60) % 24);
         //  days = Math.floor(t / (1000 * 60 * 60 * 24));
 
+        //console.log(typeof (seconds));  - Number!
+        //console.log(typeof (minutes));  - Number!
+
+        function addZero(num) {
+            num = num.toString();
+            //(num < 10) ? (0 + num) : return num;  /* how to refactor correct? */
+            if (num < 10) {
+                return 0 + num;
+            } else {
+                return num;
+            }
+
+        }
+
+
+        minutes = addZero(minutes);
+        seconds = addZero(seconds);
+
         return {
             'total': t,
             'hours': hours,
@@ -73,19 +91,12 @@ window.addEventListener('DOMContentLoaded', () => {
             seconds = timer.querySelector('.seconds'),
             timeInterval = setInterval(updateClock, 1000);
 
-        function addZero(num) {
-            if (num < 10) {
-                return 0 + num;
-            } else {
-                return num;
-            }
-        }
 
         function updateClock() {
             let t = getTimeRemaining(endtime);
             hours.textContent = t.hours;
-            minutes.textContent = addZero(t.minutes);
-            seconds.textContent = addZero(t.seconds);
+            minutes.textContent = t.minutes;
+            seconds.textContent = t.seconds;
 
             if (total <= 0) {
                 clearInterval(timeInterval);
@@ -192,7 +203,7 @@ window.addEventListener('DOMContentLoaded', () => {
             newobj[key] = value;
         });
 
-        let contactJson = JSON.stringify(obj);
+        let contactJson = JSON.stringify(newobj);
 
         request.send(contactJson);
 
