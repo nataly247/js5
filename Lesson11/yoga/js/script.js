@@ -124,7 +124,7 @@ window.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
     });
 
-    // Form 
+    // Forms
 
     let message = {
         loading: 'Загрузка...',
@@ -133,124 +133,79 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     let form = document.querySelector('.main-form'),
+        contactForm = document.querySelector('.contact-form'),
         input = form.getElementsByTagName('input'),
         statusMessage = document.createElement('div');
 
     statusMessage.classList.add('status');
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        form.appendChild(statusMessage);
+    function sendForm(theform) {
+        theform.addEventListener('submit', function (event) {
+            event.preventDefault();
+            theform.appendChild(statusMessage);
 
-        let request = new XMLHttpRequest();
-        request.open('POST', 'server.php');
-        request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+            let request = new XMLHttpRequest();
+            request.open('POST', 'server.php');
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-        let formData = new FormData(form);
+            let formData = new FormData(theform);
 
-        let obj = {};
-        formData.forEach(function (value, key) {
-            obj[key] = value;
-        });
+            /*
+            let obj = {};
+            formData.forEach(function (value, key) {
+                obj[key] = value;
+            });
+    
+            let json = JSON.stringify(obj);
+    
+            request.send(json);
+            */
+            request.send(formData);
 
-        let json = JSON.stringify(obj);
+            request.onreadystatechange = function () {
+                if (request.readyState < 4) {
+                    statusMessage.innerHTML = message.loading;
+                    //add loading animation
+                } else if (request.readyState === 4 && request.status == 200) {
+                    statusMessage.innerHTML = message.success; //+ validPhone(); -?
+                    //may add ThankYou modal here
+                } else {
+                    statusMessage.innerHTML = message.failure;
+                }
+            }
 
-        request.send(json);
 
-        request.send(formData);
-
-        request.addEventListener('readystatechange', function () {
-            if (request.readyState < 4) {
-                statusMessage.innerHTML = message.loading;
-            } else if (request.readyState === 4 && request.status == 200) {
-                statusMessage.innerHTML = message.success;
-            } else {
-                statusMessage.innerHTML = message.failure;
+            for (let i = 0; i < input.length; i++) {
+                input[i].value = ' ';
             }
         });
 
-        for (let i = 0; i < input.length; i++) {
-            input[i].value = ' ';
-        }
-    });
-
-    // Contact-form 
-
-    let message2 = {
-        loading: 'Загрузка...',
-        success: 'Спасибо! Скоро мы с вами свяжемся!',
-        failure: 'Что-то пошло не так...'
-    };
-
-    let contactForm = document.querySelector('.contact-form'),
-        contactFormInput = contactForm.getElementsByTagName('input'),
-        contactStatusMessage = document.createElement('div');
-
-    contactStatusMessage.classList.add('status');
-
-    contactForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        contactForm.appendChild(contactStatusMessage);
-
-        let request = new XMLHttpRequest();
-        request.open('POST', 'server.php');
-        request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-
-        let contactFormData = new FormData(contactForm);
-
-        let newobj = {};
-        contactFormData.forEach(function (value, key) {
-            newobj[key] = value;
-        });
-
-        let contactJson = JSON.stringify(newobj);
-
-        request.send(contactJson);
-
-        request.send(contactFormData);
-
-        request.addEventListener('readystatechange', function () {
-            if (request.readyState < 4) {
-                contactStatusMessage.innerHTML = message2.loading;
-            } else if (request.readyState === 4 && request.status == 200) {
-                contactStatusMessage.innerHTML = message2.success;
-
-                /* let phoneVal = document.getElementsById('needvalid');
-                   needvalid.addEventListener('click', validPhone());
-                
-                  // - ?
-                */
-
-            } else {
-                contactStatusMessage.innerHTML = message2.failure;
-            }
-        });
-
-        for (let i = 0; i < contactFormInput.length; i++) {
-            contactFormInput[i].value = ' ';
-        }
-
-
-        //Валидация данных 
-
-        function validPhone() {
-
-            let re = /^\+|\d[\d\(\)\ -]{4,14}\d$/;
-
-            let userPhone = document.getElementById('tel').value;
-            let valid = re.test(userPhone);
-
-
-            if (valid) {
-                contactStatusMessage.innerHTML = message2.success;
-            } else {
-                let output = "Номер телефона введен неправильно!";
-                document.getElementsByClassName('.contact-form-title').innerTHML =
-                    document.getElementsByClassName('contact-form-title').innerHTML + '<br>' + output;
-            }
-        }
-
-    });
-
+    }
+    sendForm(form);
+    sendForm(contactForm);
 
 });
+
+
+
+
+//Валидация данных 
+
+function validPhone() {
+
+    let re = /^\+|\d[\d\(\)\ -]{4,14}\d$/;
+
+    let userPhone = document.getElementById('tel').value;
+    let valid = re.test(userPhone);
+
+
+    if (valid == true) {
+        statusMessage.innerHTML = message.success;
+    } else {
+        let output = "Номер телефона введен неправильно!";
+        document.getElementsByClassName('.contact-form-title').innerTHML =
+            document.getElementsByClassName('contact-form-title').innerHTML + '<br>' + output;
+    }
+}
+
+
