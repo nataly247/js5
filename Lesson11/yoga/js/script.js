@@ -133,9 +133,19 @@ window.addEventListener('DOMContentLoaded', () => {
 
         let request = new XMLHttpRequest();
         request.open('POST', 'server.php');
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
         let formData = new FormData(form);
+
+        let obj = {};
+        formData.forEach(function (value, key) {
+            obj[key] = value;
+        });
+
+        let json = JSON.stringify(obj);
+
+        request.send(json);
+
         request.send(formData);
 
         request.addEventListener('readystatechange', function () {
