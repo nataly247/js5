@@ -163,4 +163,77 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Contact-form 
+
+    let message2 = {
+        loading: 'Загрузка...',
+        success: 'Спасибо! Скоро мы с вами свяжемся!',
+        failure: 'Что-то пошло не так...'
+    };
+
+    let contactForm = document.querySelector('.contact-form'),
+        contactFormInput = contactForm.getElementsByTagName('input'),
+        contactStatusMessage = document.createElement('div');
+
+    contactStatusMessage.classList.add('status');
+
+    contactForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        contactForm.appendChild(contactStatusMessage);
+
+        let request = new XMLHttpRequest();
+        request.open('POST', 'server.php');
+        request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+        let contactFormData = new FormData(contactForm);
+
+        let newobj = {};
+        contactFormData.forEach(function (value, key) {
+            newobj[key] = value;
+        });
+
+        let contactJson = JSON.stringify(obj);
+
+        request.send(contactJson);
+
+        request.send(contactFormData);
+
+        request.addEventListener('readystatechange', function () {
+            if (request.readyState < 4) {
+                contactStatusMessage.innerHTML = message2.loading;
+            } else if (request.readyState === 4 && request.status == 200) {
+                contactStatusMessage.innerHTML = message2.success;  //validPhone() - ?
+            } else {
+                contactStatusMessage.innerHTML = message2.failure;
+            }
+        });
+
+        for (let i = 0; i < contactFormInput.length; i++) {
+            contactFormInput[i].value = ' ';
+        }
+    });
+
+    //Валидация данных 
+
+    function validPhone() {
+
+        let re = /^\+|\d[\d\(\)\ -]{4,14}\d$/;
+
+        let userPhone = document.getElementById('tel').value;
+        let valid = re.test(userPhone);
+
+
+        if (valid) {
+            contactStatusMessage.innerHTML = message2.success;
+        } else {
+            let output = "Номер телефона введен неправильно!";
+            document.getElementsByClassName('.contact-form-title').innerTHML =
+                document.getElementsByClassName('contact-form-title').innerHTML + '<br>' + output;
+        }
+
+
+    }
+
+
+
 });
